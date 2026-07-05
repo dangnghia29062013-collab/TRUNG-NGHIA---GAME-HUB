@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kéo Búa Bao</title>
+<style>
+body{margin:0;font-family:Arial;background:#1e293b;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh}
+.box{background:#334155;padding:30px;border-radius:15px;text-align:center;width:420px}
+button{font-size:40px;margin:8px;padding:10px 18px;border:none;border-radius:10px;cursor:pointer}
+#result{margin-top:20px;font-size:22px}
+.small{font-size:18px}
+</style></head><body>
+<div class="box">
+<h1>✊✋✌ Kéo Búa Bao</h1>
+<p>Chọn một biểu tượng:</p>
+<button onclick="play('✊')">✊</button>
+<button onclick="play('✋')">✋</button>
+<button onclick="play('✌️')">✌️</button>
+<div id="result"></div>
+<p class="small">Thắng: <span id="w">0</span> | Thua: <span id="l">0</span> | Hòa: <span id="d">0</span></p>
+</div>
+<script>
+let win=0,lose=0,draw=0;
+const cpuChoices=['✊','✋','✌️'];
+function play(me){
+ const cpu=cpuChoices[Math.floor(Math.random()*3)];
+ let text="";
+ if(me===cpu){draw++;text="🤝 Hòa";}
+ else if((me==='✊'&&cpu==='✌️')||(me==='✋'&&cpu==='✊')||(me==='✌️'&&cpu==='✋')){win++;text="🎉 Bạn thắng!";}
+ else{lose++;text="💀 Bạn thua!";}
+ document.getElementById('result').innerHTML=
+ `<h2>${text}</h2><p>Bạn: ${me}</p><p>Máy: ${cpu}</p>`;
+ w.textContent=win;l.textContent=lose;d.textContent=draw;
+}
+</script></body></html>
