@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trung Nghĩa Game Hub</title>
+
+<style>
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.8);
+    backdrop-filter:blur(8px);
+    z-index:999;
+}
+
+.popup{
+
+    display:none;
+    position:fixed;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:900px;
+    max-width:95%;
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    background:linear-gradient(180deg,#1b2838,#171a21);
+
+    border-radius:18px;
+
+    box-shadow:
+    0 0 40px rgba(0,0,0,.8),
+    0 0 20px #38bdf855;
+
+    animation:popup .35s;
+
+    color:white;
+
+    z-index:1000;
+
+}
+
+@keyframes popup{
+
+from{
+
+opacity:0;
+
+transform:translate(-50%,-60%) scale(.85);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translate(-50%,-50%) scale(1);
+
+}
+
+}
+
+.popup img{
+
+width:100%;
+
+height:320px;
+
+object-fit:cover;
+
+border-radius:18px 18px 0 0;
+
+}
+
+.popup-content{
+
+padding:30px;
+
+}
+
+.popup h2{
+
+font-size:36px;
+
+color:#66c0f4;
+
+margin-bottom:20px;
+
+}
+
+.info{
+
+display:grid;
+
+grid-template-columns:180px 1fr;
+
+row-gap:12px;
+
+font-size:18px;
+
+}
+
+.info b{
+
+color:#8f98a0;
+
+}
+
+.description{
+
+margin-top:25px;
+
+padding:20px;
+
+background:#22303d;
+
+border-radius:12px;
+
+line-height:1.7;
+
+}
+
+.spec{
+
+margin-top:20px;
+
+padding:20px;
+
+background:#101822;
+
+border-radius:12px;
+
+line-height:1.8;
+
+}
+
+.buttons{
+
+display:flex;
+
+justify-content:center;
+
+gap:20px;
+
+margin:30px 0;
+
+}
+
+.download{
+
+background:#22c55e;
+
+color:white;
+
+padding:14px 35px;
+
+font-size:18px;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.download:hover{
+
+background:#16a34a;
+
+transform:scale(1.05);
+
+}
+
+.close{
+
+background:#ef4444;
+
+color:white;
+
+padding:14px 35px;
+
+font-size:18px;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.close:hover{
+
+background:#dc2626;
+
+transform:scale(1.05);
+
+}
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#0b1120;
+    color:white;
+}
+
+/* Banner */
+
+.hero{
+    width:100%;
+    background:#000;
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+}
+
+.hero-item{
+    position:relative;
+    overflow:hidden;
+}
+
+.hero-item img{
+    width:100%;
+    height:350px;
+    object-fit:cover;
+}
+
+.center{
+    position:relative;
+}
+
+.hero-text{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    width:100%;
+}
+
+.hero-text h1{
+    font-size:60px;
+    color:#00d4ff;
+    text-shadow:0 0 20px #00d4ff;
+}
+
+.hero-text h2{
+    font-size:40px;
+    color:white;
+}
+
+.hero-text p{
+    font-size:16px;
+    margin-top:10px;
+}
+
+/* Menu */
+
+nav{
+    background:#111827;
+    text-align:center;
+    padding:15px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 20px;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#00d4ff;
+}
+
+/* Nội dung */
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+    padding:30px 0;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:30px;
+    color:#00d4ff;
+}
+
+/* Card game */
+
+.games{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:15px;
+    overflow:hidden;
+    transition:.3s;
+    box-shadow:0 0 15px rgba(0,0,0,.5);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+}
+
+.card h3{
+    color:#38bdf8;
+    margin-bottom:10px;
+}
+
+.price{
+    color:#facc15;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+/* Online Games */
+
+.online-games{
+    margin-top:40px;
+    background:#1e293b;
+    padding:25px;
+    border-radius:15px;
+}
+
+.game-btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 20px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+}
+
+.game-btn:hover{
+    background:#1d4ed8;
+}
+
+/* Footer */
+
+footer{
+    background:#111827;
+    text-align:center;
+    padding:25px;
+    margin-top:40px;
+}
+
+footer p{
+    margin-top:5px;
+}
+
+
+.card{cursor:pointer}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:9998}
+.popup{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;max-width:92%;max-height:90vh;overflow:auto;background:#1f2937;color:#fff;border-radius:16px;padding:24px;z-index:9999}
+.popup img{width:100%;height:280px;object-fit:cover;border-radius:10px}
+.popup button{padding:10px 18px;margin:8px;border:none;border-radius:8px;cursor:pointer}
+
+</style>
+
+</head>
+<body>
+    
+<!-- Banner -->
+
+<section class="hero">
+
+    <div class="hero-grid">
+
+        <div class="hero-item">
+            <img src="minecraft.png" alt="Minecraft">
+        </div>
+
+        <div class="hero-item center">
+
+            <img src="genshin-impact.png" alt="Genshin">
+
+            <div class="hero-text">
+                <h1>TRUNG NGHĨA</h1>
+                <h2>GAME HUB</h2>
+                <p>KHÁM PHÁ • TRẢI NGHIỆM • CHIẾN THẮNG</p>
+            </div>
+
+        </div>
+
+        <div class="hero-item">
+            <img src="throne-liberty.png" alt="Throne and Liberty">
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Menu -->
+
+<nav>
+    <a href="#gioithieu">🏠 Trang Chủ</a>
+    <a href="#games">🎮 Game Nổi Tiếng</a>
+    <a href="#online">🕹️ Game Online</a>
+    <a href="#lienhe">📞 Liên Hệ</a>
+</nav>
+
+<div class="container">
+
+<section id="gioithieu">
+
+    <h2 class="section-title">
+        Chào Mừng Đến Với Trung Nghĩa Game Hub
+    </h2>
+
+    <p>
+        Đây là website giới thiệu các tựa game nổi tiếng trên thế giới
+        và một số trò chơi online đơn giản do chính tôi phát triển.
+    </p>
+
+</section>
+
+<br><br>
+
+<section id="games">
+
+<h2 class="section-title">
+🎯 GAME NỔI TIẾNG
+</h2>
+
+<div class="games">
+
+    <!-- Minecraft -->
+
+     <div class="card" onclick="showGame('Minecraft')">
+        <img src="minecraft.png" alt="Minecraft">
+
+        <div class="card-content">
+
+            <h3>Minecraft</h3>
+
+            <p class="price">Giá: 29.99 USD</p>
+
+            <p><b>Nhà phát triển:</b> Mojang Studios</p>
+
+            <p><b>Thể loại:</b> Sandbox, Sinh tồn</p>
+
+            <p>
+                Thế giới mở nơi người chơi có thể khai thác tài nguyên,
+                xây dựng công trình và sinh tồn cùng bạn bè.
+            </p>
+
+            <p><b>Đánh giá:</b> ⭐ 9.5/10</p>
+
+        </div>
+
+    </div>
+
+    <!-- Genshin -->
+
+     <div class="card" onclick="showGame('Genshin Impact')">
+        <img src="genshin-impact.png" alt="Genshin">
+
+        <div class="card-content">
+
+            <h3>Genshin Impact</h3>
+
+            <p class="price">Giá: Miễn phí</p>
+
+            <p><b>Nhà phát triển:</b> HoYoverse</p>
+
+            <p><b>Thể loại:</b> Action RPG</p>
+
+            <p>
+                Nhà Lữ Hành khám phá thế giới Teyvat,
+                tìm kiếm người thân và chiến đấu với các thế lực bí ẩn.
+            </p>
+
+            <p><b>Đánh giá:</b> ⭐ 9/10</p>
+
+        </div>
+
+    </div>
+
+    <!-- Throne -->
+
+     <div class="card" onclick="showGame('Throne and Liberty')">
+        <img src="throne-liberty.png" alt="Throne">
+
+        <div class="card-content">
+
+            <h3>Throne and Liberty</h3>
+
+            <p class="price">Giá: Miễn phí</p>
+
+            <p><b>Nhà phát triển:</b> NCSoft</p>
+
+            <p><b>Thể loại:</b> MMORPG Fantasy</p>
+
+            <p>
+                Khám phá Solisium, tham gia chiến tranh bang hội
+                và những trận chiến PvP quy mô lớn.
+            </p>
+
+            <p><b>Đánh giá:</b> ⭐ 8.5/10</p>
+
+        </div>
+
+    </div>
+    <!-- Valorant -->
+     <div class="card" onclick="showGame('Valorant')">
+
+        <img src="valorant.png" alt="Valorant">
+
+        <div class="card-content">
+
+            <h3>Valorant</h3>
+
+            <p class="price">Giá: Miễn phí</p>
+
+            <p><b>Nhà phát triển:</b> Riot Games</p>
+
+            <p><b>Thể loại:</b> FPS, Esports</p>
+
+            <p>Game bắn súng chiến thuật 5v5 với nhiều đặc vụ có kỹ năng độc đáo.</p>
+
+            <p><b>Đánh giá:</b> ⭐ 9/10</p>
+        </div>
+    </div>
+
+        <!-- League of Legends -->
+        <div class="card" onclick="showGame('League of Legends')">
+        
+            <img src="LOL.png" alt="LoL">
+            <div class="card-content">
+                <h3>League of Legends</h3>
+                <p class="price">Giá: Miễn phí</p>
+                <p><b>Nhà phát triển:</b> Riot Games</p>
+                <p><b>Thể loại:</b> MOBA</p>
+                <p>Game chiến thuật đồng đội nổi tiếng nhất thế giới.</p>
+                <p><b>Đánh giá:</b> ⭐ 9.5/10</p>
+            </div>
+        </div>
+
+        <!-- GTA V -->
+        <div class="card" onclick="showGame('GTA V')">
+            <img src="GTA.png" alt="GTA V">
+            <div class="card-content">
+                <h3>Grand Theft Auto V</h3>
+                <p class="price">Giá: 29.99 USD</p>
+                <p><b>Nhà phát triển:</b> Rockstar Games</p>
+                <p><b>Thể loại:</b> Action, Open World</p>
+                <p>Khám phá thành phố Los Santos rộng lớn với vô số hoạt động.</p>
+                <p><b>Đánh giá:</b> ⭐ 9.8/10</p>
+            </div>
+        </div>
+
+        <!-- Fortnite -->
+        <div class="card" onclick="showGame('Fortnite')">
+            <img src="fortnite.png" alt="Fortnite">
+            <div class="card-content">
+                <h3>Fortnite</h3>
+                <p class="price">Giá: Miễn phí</p>
+                <p><b>Nhà phát triển:</b> Epic Games</p>
+                <p><b>Thể loại:</b> Battle Royale</p>
+                <p>Sinh tồn, xây dựng và chiến đấu với 100 người chơi.</p>
+                <p><b>Đánh giá:</b> ⭐ 8.8/10</p>
+            </div>
+        </div>
+
+        <!-- Roblox -->
+        <div class="card" onclick="showGame('Roblox')">
+            <img src="roblox.png" alt="Roblox">
+            <div class="card-content">
+                <h3>Roblox</h3>
+                <p class="price">Giá: Miễn phí</p>
+                <p><b>Nhà phát triển:</b> Roblox Corporation</p>
+                <p><b>Thể loại:</b> Sandbox</p>
+                <p>Nền tảng cho phép người chơi sáng tạo và trải nghiệm hàng triệu game.</p>
+                <p><b>Đánh giá:</b> ⭐ 8.9/10</p>
+            </div>
+        </div>
+
+        <!-- PUBG -->
+        <div class="card" onclick="showGame('PUBG')">
+            <img src="PUBG.png" alt="PUBG">
+            <div class="card-content">
+                <h3>PUBG</h3>
+                <p class="price">Giá: Miễn phí</p>
+                <p><b>Nhà phát triển:</b> Krafton</p>
+                <p><b>Thể loại:</b> Battle Royale</p>
+                <p>Trò chơi sinh tồn nổi tiếng với các trận đấu 100 người.</p>
+                <p><b>Đánh giá:</b> ⭐ 8.7/10</p>
+            </div>
+        </div>
+
+        <!-- Counter Strike 2 -->
+        <div class="card" onclick="showGame('Counter-Strike 2')">
+            <img src="CT2.png" alt="CS2">
+            <div class="card-content">
+                <h3>Counter-Strike 2</h3>
+                <p class="price">Giá: Miễn phí</p>
+                <p><b>Nhà phát triển:</b> Valve</p>
+                <p><b>Thể loại:</b> FPS</p>
+                <p>Phiên bản mới nhất của dòng game bắn súng huyền thoại Counter-Strike.</p>
+                <p><b>Đánh giá:</b> ⭐ 9.1/10</p>
+            </div>
+        </div>
+
+        <!-- Elden Ring -->
+        <div class="card" onclick="showGame('Elden Ring')">
+            <img src="elden.png" alt="Elden Ring">
+            <div class="card-content">
+                <h3>Elden Ring</h3>
+                <p class="price">Giá: 59.99 USD</p>
+                <p><b>Nhà phát triển:</b> FromSoftware</p>
+                <p><b>Thể loại:</b> RPG, Soulslike</p>
+                <p>Thế giới giả tưởng rộng lớn với độ khó đầy thử thách.</p>
+                <p><b>Đánh giá:</b> ⭐ 9.7/10</p>
+            </div>
+        </div>
+
+        <!-- Black Myth Wukong -->
+        <div class="card" onclick="showGame('Black Myth: Wukong')">
+            <img src="wukong.png" alt="Black Myth Wukong">
+            <div class="card-content">
+                <h3>Black Myth: Wukong</h3>
+                <p class="price">Giá: 59.99 USD</p>
+                <p><b>Nhà phát triển:</b> Game Science</p>
+                <p><b>Thể loại:</b> Action RPG</p>
+                <p>Hóa thân thành Tôn Ngộ Không trong hành trình Tây Du Ký đầy hấp dẫn.</p>
+                <p><b>Đánh giá:</b> ⭐ 9.4/10</p>
+            </div>
+        </div>
+
+</div>
+
+</section>
+
+<section id="online" class="online-games">
+
+<h2>🕹 GAME ONLINE TỰ TẠO</h2>
+
+<br>
+
+<h3>🎲 Đoán Số Bí Mật</h3>
+<p>Đoán một số từ 1 đến 100.</p>
+<a href="games/guess.html" target="_blank" class="game-btn">Chơi Ngay</a>
+
+<br><br>
+
+<h3>✊✋✌ Kéo Búa Bao</h3>
+<p>Thi đấu với máy tính.</p>
+<a href="games/rps.html" target="_blank" class="game-btn">Chơi Ngay</a>
+
+<br><br>
+
+<h3>🐍 Rắn săn mồi</h3>
+<p>Điều khiển chú rắn ăn táo và né tránh chướng ngại vật.</p>
+<a href="games/snake.html" target="_blank" class="game-btn">Chơi Ngay</a>
+
+<br><br>
+
+<h3>🐦 Flappy Bird</h3>
+<p>Điều khiển chú chim vượt qua các ống nước.</p>
+<a href="games/flappy.html" target="_blank" class="game-btn">Chơi Ngay</a>
+
+</section>
+
+</div>
+
+<footer id="lienhe">
+
+    <h2>📞 Liên Hệ</h2>
+
+    <p>Tác giả: Trung Nghĩa</p>
+    <p>Email: dangnghia29062013@gmail.com</p>
+    <p>© 2026 Trung Nghĩa Game Hub</p>
+
+</footer>
+
+
+<div class="overlay" id="overlay"></div>
+
+<div class="popup" id="popup">
+
+<img id="pimg">
+
+<div class="popup-content">
+
+<h2 id="ptitle"></h2>
+
+<div class="info">
+
+<b>⭐ Đánh giá</b><span id="rating"></span>
+
+<b>💰 Giá</b><span id="price"></span>
+
+<b>🏢 Nhà phát triển</b><span id="studio"></span>
+
+<b>📅 Phát hành</b><span id="release"></span>
+
+<b>🎮 Thể loại</b><span id="genre"></span>
+
+<b>💾 Dung lượng</b><span id="size"></span>
+
+<b>🖥️ Nền tảng</b><span id="platform"></span>
+
+</div>
+
+<div class="description">
+
+<h3>📖 Giới thiệu</h3>
+
+<p id="description"></p>
+
+</div>
+
+<div class="spec">
+
+<h3>💻 Cấu hình tối thiểu</h3>
+
+<p id="spec"></p>
+
+</div>
+
+<div class="buttons">
+
+<a id="plink" target="_blank">
+
+<button class="download">
+
+⬇️ Tải Game
+
+</button>
+
+</a>
+
+<button class="close"
+
+onclick="closePopup()">
+
+❌ Đóng
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+<script>
+    const db = {
+
+        "Minecraft":{
+        img:"minecraft.png",
+        rating:"9.5/10",
+        price:"29.99 USD",
+        studio:"Mojang Studios",
+        release:"18/11/2011",
+        genre:"Sandbox, Sinh tồn",
+        size:"2 GB",
+        platform:"Windows / macOS / Linux",
+        description:"Minecraft là trò chơi thế giới mở, nơi người chơi khai thác tài nguyên, chế tạo vật phẩm, xây dựng và sinh tồn trong một thế giới gần như vô hạn.",
+        spec:"CPU: Intel Core i3<br>RAM: 4 GB<br>GPU: Intel HD 4000<br>Ổ cứng: 2 GB",
+        link:"https://download.com.vn/download/minecraft-44205?linkid=1"
+        },
+
+        "GTA V":{
+        img:"gta5.png",
+        rating:"9.7/10",
+        price:"29.99 USD",
+        studio:"Rockstar Games",
+        release:"17/09/2013",
+        genre:"Open World, Action",
+        size:"110 GB",
+        platform:"Windows",
+        description:"Khám phá thành phố Los Santos rộng lớn với ba nhân vật chính và vô số nhiệm vụ hấp dẫn.",
+        spec:"CPU: Intel Core i5-3470<br>RAM: 8 GB<br>GPU: GTX 660<br>Ổ cứng: 110 GB",
+        link:"https://store.steampowered.com/app/271590/"
+        },
+
+        "Valorant":{
+        img:"valorant.png",
+        rating:"9.1/10",
+        price:"Miễn phí",
+        studio:"Riot Games",
+        release:"02/06/2020",
+        genre:"FPS",
+        size:"35 GB",
+        platform:"Windows",
+        description:"Game bắn súng chiến thuật 5v5 với nhiều đặc vụ sở hữu kỹ năng độc đáo.",
+        spec:"CPU: Intel Core i3<br>RAM: 4 GB<br>GPU: Intel HD 4000",
+        link:"https://playvalorant.com/en-us/download/"
+        },
+
+        "League of Legends":{
+        img:"lol.png",
+        rating:"9.0/10",
+        price:"Miễn phí",
+        studio:"Riot Games",
+        release:"27/10/2009",
+        genre:"MOBA",
+        size:"25 GB",
+        platform:"Windows",
+        description:"Game MOBA nổi tiếng, nơi hai đội 5 người chiến đấu để phá hủy Nhà Chính đối phương.",
+        spec:"CPU: Intel Core i3<br>RAM: 4 GB<br>GPU: Intel HD 4600",
+        link:"https://www.leagueoflegends.com/en-sg/download/"
+        },
+
+        "Genshin Impact":{
+        img:"genshin-impact.png",
+        rating:"9.3/10",
+        price:"Miễn phí",
+        studio:"HoYoverse",
+        release:"28/09/2020",
+        genre:"Action RPG",
+        size:"90 GB",
+        platform:"Windows / Android / iOS / PS5",
+        description:"Phiêu lưu trong thế giới Teyvat rộng lớn với hệ thống chiến đấu nguyên tố đặc sắc.",
+        spec:"CPU: Intel Core i5<br>RAM: 8 GB<br>GPU: GTX 1030",
+        link:"https://genshin.hoyoverse.com/vi/home"
+        },
+
+        "Throne and Liberty":{
+        img:"throne-liberty.png",
+        rating:"8.7/10",
+        price:"Miễn phí",
+        studio:"NCSoft",
+        release:"2024",
+        genre:"MMORPG",
+        size:"70 GB",
+        platform:"Windows",
+        description:"MMORPG thế giới mở với các trận chiến PvP quy mô lớn và chiến tranh bang hội.",
+        spec:"CPU: Ryzen 5 3600<br>RAM: 16 GB<br>GPU: RTX 2060",
+        link:"https://www.playthroneandliberty.com/en-us/"
+        },
+
+        "Roblox":{
+        img:"roblox.png",
+        rating:"8.9/10",
+        price:"Miễn phí",
+        studio:"Roblox Corporation",
+        release:"01/09/2006",
+        genre:"Sandbox",
+        size:"2 GB",
+        platform:"Windows / Android / iOS",
+        description:"Nền tảng cho phép người chơi trải nghiệm hàng triệu trò chơi do cộng đồng sáng tạo.",
+        spec:"CPU: Intel Core i3<br>RAM: 4 GB",
+        link:"https://www.roblox.com/vi/download"
+        },
+
+        "PUBG":{
+        img:"pubg.png",
+        rating:"8.8/10",
+        price:"Miễn phí",
+        studio:"KRAFTON",
+        release:"23/03/2017",
+        genre:"Battle Royale",
+        size:"50 GB",
+        platform:"Windows",
+        description:"100 người chơi chiến đấu trên một hòn đảo và chỉ có một người hoặc một đội chiến thắng.",
+        spec:"CPU: Intel Core i5<br>RAM: 8 GB<br>GPU: GTX 960",
+        link:"https://pubg.com/vi/main"
+        },
+
+        "Counter-Strike 2":{
+        img:"cs2.png",
+        rating:"9.2/10",
+        price:"Miễn phí",
+        studio:"Valve",
+        release:"27/09/2023",
+        genre:"FPS",
+        size:"40 GB",
+        platform:"Windows",
+        description:"Phiên bản mới của Counter-Strike với đồ họa Source 2 và cơ chế khói động.",
+        spec:"CPU: Intel Core i5<br>RAM: 8 GB<br>GPU: GTX 1060",
+        link:"https://store.steampowered.com/app/730/CounterStrike_2/"
+        },
+
+        "Fortnite":{
+        img:"fortnite.png",
+        rating:"9.1/10",
+        price:"Miễn phí",
+        studio:"Epic Games",
+        release:"21/07/2017",
+        genre:"Battle Royale",
+        size:"45 GB",
+        platform:"Windows / PS5 / Xbox / Switch",
+        description:"Battle Royale kết hợp xây dựng, nhiều chế độ chơi và các sự kiện trực tiếp hấp dẫn.",
+        spec:"CPU: Intel Core i5<br>RAM: 8 GB<br>GPU: GTX 960",
+        link:"https://www.fortnite.com/download"
+        },
+
+        "Elden Ring":{
+        img:"elden-ring.png",
+        rating:"9.8/10",
+        price:"59.99 USD",
+        studio:"FromSoftware",
+        release:"25/02/2022",
+        genre:"Action RPG",
+        size:"60 GB",
+        platform:"Windows / PS5 / Xbox",
+        description:"Khám phá vùng đất Lands Between và chiến đấu với những kẻ thù đầy thử thách để trở thành Elden Lord.",
+        spec:"CPU: Intel Core i5-8400<br>RAM: 12 GB<br>GPU: GTX 1060 6GB",
+        link:"https://store.steampowered.com/app/1245620/"
+        },
+
+        "Black Myth: Wukong":{
+        img:"wukong.png",
+        rating:"9.7/10",
+        price:"59.99 USD",
+        studio:"Game Science",
+        release:"20/08/2024",
+        genre:"Action RPG",
+        size:"130 GB",
+        platform:"Windows / PS5",
+        description:"Hóa thân thành Tôn Ngộ Không trong cuộc phiêu lưu lấy cảm hứng từ Tây Du Ký với đồ họa Unreal Engine 5.",
+        spec:"CPU: Ryzen 5 5500<br>RAM: 16 GB<br>GPU: RTX 2060",
+        link:"https://store.steampowered.com/app/2358720/"
+    }
+
+};
+
+function showGame(n){
+
+    let g = db[n];
+    if(!g) return;
+
+    overlay.style.display = "block";
+    popup.style.display = "block";
+
+    ptitle.innerHTML = n;
+    pimg.src = g.img;
+
+    rating.innerHTML = g.rating;
+    price.innerHTML = g.price;
+    studio.innerHTML = g.studio;
+    release.innerHTML = g.release;
+    genre.innerHTML = g.genre;
+    size.innerHTML = g.size;
+    platform.innerHTML = g.platform;
+
+    description.innerHTML = g.description;
+    spec.innerHTML = g.spec;
+
+    plink.href = g.link;
+}
+function closePopup(){
+    overlay.style.display='none';
+    popup.style.display='none';
+    }
+</script>
+</body>
+</html>
